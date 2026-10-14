@@ -1,1 +1,540 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#1D4E5F"><meta name="description" content="Hello"><meta name="author" content="Jello"><meta name="version" content="1.0.0"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="My App"><title>My App</title><style>html,body{background:#FFFFFF}:root{--bg:#EEF2F3;--card:#fff;--teal:#1D4E5F;--orange:#F5A944;--peach:#FDE9D5;--text:#1D4E5F;--mute:#7C8E95;--code:#fff;--err:#C0392B;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#0F1E24;--card:#16303A;--peach:#2A3B3E;--text:#E8F1F3;--mute:#8FA7AE;--code:#0F1E24}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:14px Poppins,system-ui,sans-serif}
+#app{max-width:520px;height:100%;margin:0 auto;display:flex;flex-direction:column;position:relative}
+.page{display:none;flex:1;overflow-y:auto;padding:14px 14px 104px}
+.page.on{display:block}
+.brand{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{font-size:20px;font-weight:600}h1 b{color:var(--orange);font-weight:600}
+h2{font-size:15px;font-weight:600;margin:16px 0 8px}
+button,.fl,select{font:500 13px Poppins,system-ui,sans-serif}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ib{background:var(--card);border:0;border-radius:14px;width:44px;height:44px;cursor:pointer;color:var(--text);flex:none;display:inline-flex;align-items:center;justify-content:center}
+.ib.x{color:#C0392B}
+.pill{background:var(--orange);color:#fff;border:0;border-radius:18px;padding:11px 16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.pill.alt{background:var(--card);color:var(--text)}
+.pill.big{display:flex;width:100%;padding:14px;font-size:15px;border-radius:28px;margin-top:12px}
+.tabs{display:flex;gap:6px}
+.tab{flex:1;border:0;border-radius:14px;padding:11px 4px;background:var(--card);color:var(--mute);cursor:pointer}
+.tab.on{background:var(--teal);color:#fff}
+.tab.dot::after{content:" ●";color:var(--orange);font-size:8px}
+.fl{position:relative;overflow:hidden}
+.fl input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
+.hint{color:var(--mute);font-size:11.5px;margin:6px 2px 10px;line-height:1.5}
+.bar{display:flex;gap:6px;align-items:center;margin-bottom:10px}
+input[type=text],input[type=password],select,textarea.f{width:100%;min-width:0;border:0;border-radius:14px;padding:12px 14px;background:var(--card);color:var(--text);font:14px Poppins,system-ui,sans-serif;outline:2px solid transparent}
+.bar input{flex:1;width:auto;min-width:90px}
+input:focus,textarea:focus,select:focus{outline-color:var(--orange)}
+#p-home{padding-top:8px}
+#p-home .brand{margin-bottom:6px}
+#p-home h1{font-size:17px}
+#p-home .ib{width:40px;height:40px;border-radius:12px}
+#p-home .tab{padding:9px 4px}
+#p-home .bar{margin:8px 0}
+.editor{background:#14262D;border:2px solid var(--teal);border-radius:18px;overflow:hidden}
+.etb{display:flex;gap:4px;padding:6px;background:#1D3640}
+.etb button{flex:1;height:36px;border:0;border-radius:10px;background:#2A4A57;color:#E8F1F3;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.etb button:active{background:var(--orange)}
+.etb .ic{width:19px;height:19px}
+.editor textarea.code{display:block;width:100%;height:calc(100vh - 310px);min-height:200px;border:0;border-radius:0;padding:12px;background:transparent;color:#E8F1F3;caret-color:var(--orange);font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;resize:none;outline:0;tab-size:2;white-space:pre;overflow:scroll;overflow-wrap:normal;-webkit-user-select:text;user-select:text}
+.editor textarea.code::selection{background:#4A90E2;color:#fff}
+.editor textarea.code::-webkit-scrollbar{width:14px;height:14px}
+.editor textarea.code::-webkit-scrollbar-track{background:#1D3640}
+.editor textarea.code::-webkit-scrollbar-thumb{background:#8FA7AE;border:3px solid #1D3640;border-radius:10px;min-height:40px;min-width:40px}
+.editor textarea.code::-webkit-scrollbar-thumb:active{background:var(--orange)}
+.editor textarea.code::-webkit-scrollbar-corner{background:#1D3640}
+#ghStat{white-space:pre-line;word-break:break-word}
+body.kb .editor textarea.code{height:calc(100vh - 225px)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.tb{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;color:var(--text);cursor:pointer;font-size:11px;padding:0}
+.tb i{width:100%;height:54px;border-radius:16px;background:var(--card);display:flex;align-items:center;justify-content:center}
+.tb.on i{background:var(--teal);color:#fff}
+.tb.go i{background:var(--orange);color:#fff}
+.dim{color:var(--mute);font-size:12px;text-align:center;margin:4px 0 8px}
+.err{background:#FBE3DF;color:var(--err);border-radius:14px;padding:11px 13px;margin-bottom:10px;font:12px ui-monospace,Menlo,monospace;display:none}
+.stage{overflow:auto;display:flex;padding:8px;background:rgba(127,127,127,.1);border-radius:18px;touch-action:pan-x pan-y}
+.devbox{--u:4px;display:flex;flex-direction:column;align-items:center;margin:auto;flex:none}
+.dev{position:relative;flex:none;background:#0d0d10;box-shadow:0 0 0 calc(var(--u)*.45) #6d5c82,0 10px 26px rgba(0,0,0,.45)}
+.scr{overflow:hidden;background:#fff;position:relative}
+.frame{border:0;background:#fff;transform-origin:0 0;display:block}
+.cam{position:absolute;background:#000;z-index:3;display:none}
+.dev.mini{padding:calc(var(--u)*3.2);border-radius:calc(var(--u)*13)}
+.dev.mini .scr{border-radius:calc(var(--u)*10)}
+.dev.phone{padding:calc(var(--u)*3);border-radius:calc(var(--u)*11)}
+.dev.phone .scr{border-radius:calc(var(--u)*8.5)}
+.dev.tablet{padding:calc(var(--u)*6);border-radius:calc(var(--u)*8)}
+.dev.tablet .scr{border-radius:calc(var(--u)*2.5)}
+.dev.desktop{padding:calc(var(--u)*1.6) calc(var(--u)*1.6) calc(var(--u)*2.6);border-radius:calc(var(--u)*2.5);background:#1b1b20}
+.dev.desktop .scr{border-radius:calc(var(--u)*.4)}
+.dev.mini .cam{display:block;left:50%;top:calc(var(--u)*3.2);width:calc(var(--u)*38);height:calc(var(--u)*6);transform:translateX(-50%);border-radius:0 0 calc(var(--u)*4) calc(var(--u)*4)}
+.dev.phone .cam{display:block;left:50%;top:calc(var(--u)*5);width:calc(var(--u)*3.6);height:calc(var(--u)*3.6);transform:translateX(-50%);border-radius:50%}
+.dev.tablet .cam{display:block;left:50%;top:calc(var(--u)*2.4);width:calc(var(--u)*1.4);height:calc(var(--u)*1.4);transform:translateX(-50%);border-radius:50%;background:#2b2b33}
+.dev.desktop .cam{display:block;left:50%;top:calc(var(--u)*.6);width:calc(var(--u)*.7);height:calc(var(--u)*.7);transform:translateX(-50%);border-radius:50%;background:#2b2b33}
+.dev.rot.mini .cam{left:calc(var(--u)*3.2);top:50%;width:calc(var(--u)*6);height:calc(var(--u)*38);transform:translateY(-50%);border-radius:0 calc(var(--u)*4) calc(var(--u)*4) 0}
+.dev.rot.phone .cam{left:calc(var(--u)*5);top:50%;transform:translateY(-50%)}
+.dev.rot.tablet .cam{left:calc(var(--u)*2.4);top:50%;transform:translateY(-50%)}
+.stand{display:none;flex-direction:column;align-items:center}
+.stand.on{display:flex}
+.neck{display:block;width:calc(var(--u)*16);height:calc(var(--u)*9);background:linear-gradient(90deg,#8d8d95,#c7c7ce,#8d8d95)}
+.base{display:block;width:calc(var(--u)*46);height:calc(var(--u)*2.2);background:linear-gradient(#c7c7ce,#8d8d95);border-radius:calc(var(--u)*1.1)}
+.fab{position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top,0px));display:none;gap:8px;z-index:35}
+.fab .ib{box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.err .e{padding:6px 0;border-bottom:1px solid rgba(192,57,43,.25)}
+.err .e:last-child{border:0}
+.err code{display:block;opacity:.85;word-break:break-all;margin-top:2px}
+.err small{display:block;color:#7A2A20;margin-top:3px}
+.err button{background:var(--err);color:#fff;border:0;border-radius:10px;padding:5px 10px;margin-top:6px;font:500 12px Poppins,system-ui,sans-serif}
+body.only .fab{display:flex}
+body.only nav,body.only .ctl,body.only .err{display:none!important}
+body.only #p-prev{padding:8px}
+body.only .stage{height:calc(100vh - 16px)}
+.appcard{background:var(--teal);color:#fff;border-radius:24px;padding:18px;display:flex;gap:14px;align-items:center}
+.appicon{width:72px;height:72px;border-radius:20px;background:var(--orange);color:#fff;font:600 28px Poppins,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none}
+.appicon.round{border-radius:50%}
+.appicon img{width:100%;height:100%;object-fit:cover}
+.appcard small{opacity:.75;display:block}.appcard b{font-size:17px;display:block;word-break:break-word}
+label.l{color:var(--mute);font-size:12px;display:block;margin:12px 2px 5px}
+.two{display:flex;gap:8px}.two>*{flex:1}
+input[type=color]{width:100%;height:44px;border:0;border-radius:14px;background:var(--card);padding:4px}
+.card{background:var(--peach);border-radius:18px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card small{color:var(--mute);display:block}.card .pill{padding:7px 12px}
+.note{background:var(--peach);border-radius:16px;padding:12px 14px;font-size:12px;line-height:1.6;margin-top:12px}
+.stats{display:flex;gap:8px;margin-top:12px}
+.stats div{flex:1;background:var(--teal);color:#fff;border-radius:16px;padding:12px;text-align:center;font-size:12px}.stats b{display:block;font-size:20px;color:var(--orange)}
+nav{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 20px);max-width:500px;z-index:30;bottom:calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-radius:30px;display:flex;align-items:flex-end;justify-content:space-around;padding:8px 4px;box-shadow:0 8px 24px rgba(29,78,95,.2)}
+nav button{flex:1;background:none;border:0;color:var(--mute);font-size:10.5px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;line-height:1.15;text-align:center}
+nav button.on{color:var(--teal)}
+:root[data-theme="dark"] nav button.on{color:var(--orange)}
+nav .mid{color:var(--text)}
+nav .mid i{width:54px;height:54px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;outline:3px solid var(--peach);margin-top:-22px}
+body.kb nav{display:none}
+body.kb .page{padding-bottom:14px}
+.toast{position:fixed;left:50%;bottom:calc(112px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--teal);color:#fff;padding:9px 16px;border-radius:18px;font-size:12.5px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility .2s;z-index:50;max-width:92%;text-align:center;display:flex;gap:10px;align-items:center}
+.toast.on{opacity:1;visibility:visible}.toast button{pointer-events:auto}
+.toast button{background:var(--orange);color:#fff;border:0;border-radius:12px;padding:4px 10px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:40}
+.modal.on{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:520px;border-radius:26px 26px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:88%;overflow:auto}
+.sheet textarea.f{height:220px;font:12px/1.5 ui-monospace,Menlo,monospace;resize:none}
+.tpl{width:100%;text-align:left;background:var(--card);color:var(--text);border:0;border-radius:16px;padding:14px;margin-bottom:8px;cursor:pointer;display:block}
+.tpl small{color:var(--mute);display:block;font-weight:400;margin-top:2px}
+#pbox{height:100px!important}
+@media(max-width:360px){
+.page{padding-left:10px;padding-right:10px}
+#p-home .ib{width:36px;height:36px}
+.bar{gap:4px}
+.bar input{min-width:80px;padding:10px}
+.etb button{height:32px;min-width:0}
+.tab{font-size:12px;padding:8px 2px}
+nav button{font-size:9.5px}
+.tb i{height:46px}
+}
+button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M12 3 3 10.5V21h6v-6h6v6h6V10.5z" fill="currentColor"></path></symbol>
+<symbol id="i-prev" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"></rect><path d="M3 9h18M8 13h3"></path></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"></path></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="currentColor"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6z" fill="currentColor"></path></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+<symbol id="i-desk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></symbol>
+<symbol id="i-tab" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M11 18h2"></path></symbol>
+<symbol id="i-ph" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"></rect><path d="M11 18.5h2"></path></symbol>
+<symbol id="i-mini" viewBox="0 0 24 24"><rect x="8" y="6" width="8" height="13" rx="2"></rect></symbol>
+<symbol id="i-rot" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"></path></symbol>
+<symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4-4M11 8v6M8 11h6"></path></symbol>
+<symbol id="i-rl" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 4v5h-5M20 12a8 8 0 0 1-14 5.3M4 20v-5h5"></path></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke-width="3"></path></symbol>
+<symbol id="i-paste" viewBox="0 0 24 24"><rect x="6" y="5" width="12" height="16" rx="2"></rect><path d="M9 5V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="1.5"></circle><path d="M4 18l5-5 4 4 3-3 4 4"></path></symbol>
+<symbol id="i-sel" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="3 3"></rect></symbol>
+<symbol id="i-cut" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="M8 16 19 4M16 16 5 4"></path></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V6a2 2 0 0 1 2-2h8"></path></symbol>
+<symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></symbol>
+<symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5M20 9H9.5a5.5 5.5 0 0 0 0 11H13"></path></symbol>
+<symbol id="i-zout" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4-4M8 11h6"></path></symbol>
+</defs></svg>
+<div id="app">
+<div class="toast" id="toast"></div>
 
+<section class="page on" id="p-home">
+  <div class="brand"><h1>App <b>Builder</b></h1><button class="ib" id="theme" aria-label="Dark mode">🌙</button></div>
+  <div class="tabs">
+    <button class="tab on" data-t="html">HTML</button>
+    <button class="tab" data-t="css">CSS</button>
+    <button class="tab" data-t="js">JS</button>
+    <label class="ib fl" title="File upload" aria-label="File upload"><svg class="ic"><use href="#i-dl" transform="rotate(180 12 12)"></use></svg><input type="file" id="file" multiple=""></label>
+    <label class="ib fl" title="Image upload" aria-label="Image upload"><svg class="ic"><use href="#i-img"></use></svg><input type="file" id="imgFile" accept="image/*" multiple=""></label>
+  </div>
+  <div class="bar">
+    <input type="text" id="nm" placeholder="App-er naam likho" maxlength="30" aria-label="App name">
+    <button class="ib x" id="clr" aria-label="Clear" title="Clear"><svg class="ic"><use href="#i-x"></use></svg></button>
+    <button class="ib" id="pst" aria-label="Paste" title="Paste"><svg class="ic"><use href="#i-paste"></use></svg></button>
+    <button class="ib" id="rfs" aria-label="Refresh" title="Refresh"><svg class="ic"><use href="#i-rl"></use></svg></button>
+  </div>
+  <div class="editor">
+    <div class="etb">
+      <button id="eAll" aria-label="Select all" title="Select all"><svg class="ic"><use href="#i-sel"></use></svg></button>
+      <button id="eCut" aria-label="Cut" title="Cut"><svg class="ic"><use href="#i-cut"></use></svg></button>
+      <button id="eCopy" aria-label="Copy" title="Copy"><svg class="ic"><use href="#i-copy"></use></svg></button>
+      <button id="ePaste" aria-label="Paste" title="Paste"><svg class="ic"><use href="#i-paste"></use></svg></button>
+      <button id="eUndo" aria-label="Undo" title="Undo"><svg class="ic"><use href="#i-undo"></use></svg></button>
+      <button id="eRedo" aria-label="Redo" title="Redo"><svg class="ic"><use href="#i-redo"></use></svg></button>
+    </div>
+    <textarea class="code" id="ed" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Code editor"></textarea>
+  </div>
+</section>
+
+<section class="page" id="p-prev">
+  <div class="ctl">
+  <div class="grid4">
+    <button class="tb" data-d="desktop"><i><svg class="ic"><use href="#i-desk"></use></svg></i>Desktop</button>
+    <button class="tb" data-d="tablet"><i><svg class="ic"><use href="#i-tab"></use></svg></i>Tablet</button>
+    <button class="tb on" data-d="phone"><i><svg class="ic"><use href="#i-ph"></use></svg></i>Phone</button>
+    <button class="tb" data-d="mini"><i><svg class="ic"><use href="#i-mini"></use></svg></i>Small</button>
+  </div>
+  <div class="grid4">
+    <button class="tb" id="rot"><i><svg class="ic"><use href="#i-rot"></use></svg></i>Rotate</button>
+    <button class="tb" id="zout"><i><svg class="ic"><use href="#i-zout"></use></svg></i>Zoom −</button>
+    <button class="tb" id="zin"><i><svg class="ic"><use href="#i-zoom"></use></svg></i>Zoom +</button>
+    <button class="tb" id="rl"><i><svg class="ic"><use href="#i-rl"></use></svg></i>Reload</button>
+  </div>
+  <div class="two" style="margin-bottom:6px"><button class="pill alt" id="only">▢ Shudhu device</button><button class="pill" id="build">✓ Build</button></div>
+  <div class="dim" id="dim"></div>
+  </div>
+  <div class="stage" id="stage"><div class="devbox" id="devbox"><div class="dev phone" id="dev"><div class="scr" id="wrap"><iframe class="frame" id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Preview"></iframe></div><i class="cam"></i></div><div class="stand" id="stand"><b class="neck"></b><b class="base"></b></div></div></div>
+  <div class="err" id="err" style="margin-top:10px"></div>
+  <div class="fab"><button class="ib" id="fabRot" aria-label="Rotate"><svg class="ic"><use href="#i-rot"></use></svg></button><button class="ib x" id="fabExit" aria-label="Exit"><svg class="ic"><use href="#i-x"></use></svg></button></div>
+</section>
+
+<section class="page" id="p-dl">
+  <div class="brand"><h1>Download <b>Apps</b></h1></div>
+  <div class="appcard"><div class="appicon" id="appIcon">A</div><div><small>Tomar app</small><b id="cardName">My App</b><small id="cardInfo"></small></div></div>
+  <div class="two" style="margin-top:10px">
+    <label class="pill alt fl"><svg class="ic"><use href="#i-img"></use></svg> App icon<input type="file" id="iconFile" accept="image/*"></label>
+    <button class="pill alt" id="iconRm">Icon sorao</button>
+  </div>
+  <label class="l" for="nm2">App-er naam</label><input type="text" id="nm2" maxlength="30">
+  <label class="l" for="c-pkg">Package name</label><input type="text" id="c-pkg" data-c="pkg" autocapitalize="off">
+  <div class="two"><div><label class="l" for="c-ver">Version name</label><input type="text" id="c-ver" data-c="ver"></div><div><label class="l" for="c-code">Version code</label><input type="text" id="c-code" data-c="code" inputmode="numeric"></div></div>
+  <label class="l" for="c-author">Developer / author</label><input type="text" id="c-author" data-c="author">
+  <label class="l" for="c-desc">Short description</label><input type="text" id="c-desc" data-c="desc" maxlength="80">
+  <div class="two"><div><label class="l" for="c-orient">Orientation</label><select id="c-orient" data-c="orient"><option value="auto">Auto</option><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div><div><label class="l" for="c-display">Display</label><select id="c-display" data-c="display"><option value="standalone">App-er moto</option><option value="fullscreen">Fullscreen</option></select></div></div>
+  <div class="two"><div><label class="l" for="clr2">Theme rong</label><input type="color" id="clr2"></div><div><label class="l" for="clr3">Background rong</label><input type="color" id="clr3"></div></div>
+  <button class="pill big" id="apk">📦 APK banao</button>
+  <button class="pill big" id="dl" style="background:var(--card);color:var(--text);margin-top:8px"><svg class="ic"><use href="#i-dl"></use></svg> App file download (.html)</button>
+  <div class="two" style="margin-top:8px"><button class="pill alt" id="viewCode">&lt;/&gt; Code dekho</button></div>
+  <div class="note"><b>Shotti kotha:</b> APK ei app-er bhetor toiri hoy na, karon APK banate Android build-er server lage. "APK banao" chapo: GitHub-er server APK toiri kore dibe (ekbar setup lagbe). .html file download-e box ashle SAVE FILE chapo.</div>
+</section>
+
+<section class="page" id="p-prof">
+  <div class="brand"><h1>My <b>Profile</b></h1><button class="ib" id="theme2" aria-label="Dark mode">🌙</button></div>
+  <div style="text-align:center"><div class="appicon round" id="avatar" style="margin:0 auto 10px;width:92px;height:92px;font-size:34px">U</div>
+  <label class="pill alt fl" style="display:inline-flex"><svg class="ic"><use href="#i-img"></use></svg> Photo upload<input type="file" id="avFile" accept="image/*"></label></div>
+  <label class="l" for="uname">Tomar naam</label><input type="text" id="uname" maxlength="24" placeholder="Naam likho">
+  <h2>Gmail Login</h2><div id="loginBox"></div>
+  <div class="stats"><div><b id="sRuns">0</b>Run</div><div><b id="sVer">0</b>Version</div><div><b id="sLines">0</b>Line</div></div>
+  <div class="bar" style="margin-top:16px"><h2 style="margin:0;flex:1">Save kora version</h2><button class="pill" id="saveV">💾 Save</button></div>
+  <div id="hist"></div>
+</section>
+
+<nav>
+  <button data-p="home" class="on"><svg class="ic"><use href="#i-home"></use></svg>Home</button>
+  <button data-p="prev"><svg class="ic"><use href="#i-prev"></use></svg>Preview</button>
+  <button data-p="new" class="mid"><i><svg class="ic" style="width:28px;height:28px"><use href="#i-plus"></use></svg></i>New Build</button>
+  <button data-p="dl"><svg class="ic"><use href="#i-dl"></use></svg>Download<br>Apps</button>
+  <button data-p="prof"><svg class="ic"><use href="#i-user"></use></svg>Profile</button>
+</nav>
+
+<div class="modal" id="m-paste"><div class="sheet"><h2 style="margin-top:0">Paste</h2><p class="hint">Keyboard-er upore copy kora lekhar suggestion ashle oita chapo, othoba box-e chepe dhore Paste chapo. Nijei boshe jabe.</p><textarea class="f" id="pbox" placeholder="Ekhane paste koro" aria-label="Paste box"></textarea><div class="two" style="margin-top:10px"><button class="pill alt" data-close="">Cancel</button><button class="pill" id="padd">Add koro</button></div></div></div>
+<div class="modal" id="m-code"><div class="sheet"><h2 style="margin-top:0">Pura app code</h2><p class="hint">Download na hole: Select chepe Copy koro, tarpor .html naame save koro.</p><textarea class="f" id="cbox" readonly="" aria-label="App code"></textarea><div class="two" style="margin-top:10px"><button class="pill alt" data-close="">Close</button><button class="pill alt" id="csel">Select all</button><button class="pill" id="ccopy">Copy</button></div></div></div>
+<div class="modal" id="m-apk"><div class="sheet"><h2 style="margin-top:0">📦 APK banao</h2>
+<p class="hint">GitHub-er free server tomar app-er APK toiri kore dibe. Ekbar setup lagbe, tarpor ekhan theke ek chapei APK download hobe.</p>
+<input type="text" id="ghUser" placeholder="GitHub username" autocapitalize="off" aria-label="GitHub username">
+<input type="text" id="ghRepo" placeholder="Repository naam (public hote hobe)" autocapitalize="off" aria-label="Repository" style="margin-top:6px">
+<input type="password" id="ghTok" placeholder="GitHub token" autocapitalize="off" aria-label="GitHub token" style="margin-top:6px">
+<div class="two" style="margin-top:10px"><button class="pill alt" id="ghChk">🔍 Check</button><button class="pill" id="ghGo">🚀 APK build shuru</button></div>
+<button class="pill alt" id="ghSetup" style="width:100%;margin-top:8px">⚙ Auto setup (build.yml nijei banabe)</button>
+<div class="note" id="ghStat" style="display:none"></div>
+<a class="pill big" id="ghDl" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none">⬇ APK Download</a>
+<button class="pill alt" id="ghCopy" style="display:none;width:100%;margin-top:8px">🔗 Download link copy</button>
+<div class="note"><b>Ekbar-er setup:</b> 1) github.com-e Public repo banao (README tick). 2) Settings → Developer settings → Tokens (classic) → <b>public_repo</b> ar <b>workflow</b> tick → Generate → copy. 3) Upore username, repo, token dao. 4) ⚙ Auto setup chapo (build.yml nijei toiri hobe), tarpor 🔍 Check, tarpor 🚀 chapo. (Auto setup na choleo "build.yml copy" diye .github/workflows/build.yml nijer haate banate paro.)</div>
+<button class="pill alt" id="ymlCopy" style="width:100%;margin-top:8px">📋 build.yml copy</button>
+<button class="pill alt" data-close="" style="width:100%;margin-top:8px">Close</button></div></div>
+<div class="modal" id="m-new"><div class="sheet"><h2 style="margin-top:0">New Build</h2><p class="hint">Ager code nijei History-te save hoye jabe.</p>
+  <button class="tpl" data-tpl="blank"><b>Faka app</b><small>Notun kore shuru</small></button>
+  <button class="tpl" data-tpl="counter"><b>Counter</b><small>Choto, test korar jonno</small></button>
+  <button class="pill alt" data-close="" style="width:100%;margin-top:4px">Cancel</button></div></div>
+</div>
+
+<script type="text/plain" id="ymlSrc">
+name: Build APK
+on:
+  push:
+    paths:
+      - 'www/**'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-cap6
+      - name: Android project toiri
+        run: |
+          if [ ! -f app.json ]; then echo '{"name":"My App","id":"com.appbuilder.myapp"}' > app.json; fi
+          APP_NAME=$(node -p "require('./app.json').name")
+          APP_ID=$(node -p "require('./app.json').id")
+          mkdir proj
+          cp -r www proj/www
+          cd proj
+          npm init -y
+          npm i --prefer-offline --no-audit --no-fund @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
+          npx cap init "$APP_NAME" "$APP_ID" --web-dir www
+          npx cap add android
+          npx cap sync android
+      - name: APK build
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          cd proj/android
+          chmod +x gradlew
+          ./gradlew assembleDebug --parallel --build-cache
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          files: proj/android/app/build/outputs/apk/debug/app-debug.apk
+</script><script>(function(){
+var $=function(i){return document.getElementById(i)};
+var TPL={blank:{name:'My App',html:'',css:'',js:''},
+counter:{name:'Counter',html:'<div class="c"><h1 id="n">0</h1><button id="p">+1</button> <button id="m">-1</button></div>',css:'body{font-family:sans-serif;text-align:center;padding:50px;background:#EEF2F3}\nh1{font-size:72px;color:#1D4E5F;margin:0 0 16px}\nbutton{border:0;border-radius:16px;background:#F5A944;color:#fff;font-size:20px;padding:12px 26px}',js:'var n=0,el=document.getElementById("n");\ndocument.getElementById("p").onclick=function(){el.textContent=++n};\ndocument.getElementById("m").onclick=function(){el.textContent=--n};'}};
+var S={code:{html:TPL.counter.html,css:TPL.counter.css,js:TPL.counter.js},tab:'html',name:'My App',icon:'',cfg:{pkg:'com.appbuilder.myapp',ver:'1.0.0',code:'1',author:'',desc:'',orient:'auto',display:'standalone'},color:'#1D4E5F',bg:'#FFFFFF',assets:{},hist:[],user:{name:'',img:'',email:''},gh:{user:'',repo:'',token:''},dev:'phone',rot:false,zoom:false,runs:0,theme:''};
+var KEY='ab:v2';
+try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);for(var k in o)if(k!=='tab'&&k!=='cfg')S[k]=o[k];if(o.cfg)for(var c in o.cfg)S.cfg[c]=o.cfg[c]}}catch(e){}
+function store(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function toast(m,label,fn){var t=$('toast');t.innerHTML='';var s=document.createElement('span');s.textContent=m;t.appendChild(s);t.classList.toggle('act',!!label);if(label){var b=document.createElement('button');b.textContent=label;b.onclick=function(){t.classList.remove('on');fn()};t.appendChild(b)}t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},label?5000:2400)}
+function applyTheme(){document.documentElement.setAttribute('data-theme',S.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))}
+applyTheme();
+function flip(){S.theme=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';applyTheme();store()}
+$('theme').onclick=$('theme2').onclick=flip;
+function closeModals(){document.querySelectorAll('.modal').forEach(function(m){m.classList.remove('on')});try{document.activeElement&&document.activeElement.blur()}catch(e){}document.body.classList.remove('kb')}
+document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=closeModals});
+
+function A(s){for(var k in S.assets)s=s.split(k).join(S.assets[k]);return s}
+function CD(){return{html:A(S.code.html),css:A(S.code.css),js:A(S.code.js)}}
+var HOOK='(function(){function r(m,l){parent.postMessage({abErr:m,line:l||0},"*")}window.addEventListener("error",function(e){var t=e.target;if(t&&t!==window&&t.tagName){var u=t.src||t.href||"";if(/fonts\\.(googleapis|gstatic)/.test(u))return;r("Load hoyni: "+t.tagName.toLowerCase()+" "+u,0);return}r(e.message,e.lineno)},true);window.addEventListener("unhandledrejection",function(e){var x=e.reason;r("Promise error: "+(x&&x.message||x),0)});var ce=console.error;console.error=function(){try{r("console.error: "+[].slice.call(arguments).join(" "),0)}catch(x){}ce.apply(console,arguments)}})();';
+var ENV={desktop:{ua:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',pl:'Win32',r:1,t:0,m:false},tablet:{ua:'Mozilla/5.0 (Linux; Android 12; SM-X200) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',pl:'Linux armv8l',r:1.5,t:5,m:false},phone:{ua:'Mozilla/5.0 (Linux; Android 12; SM-A135F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',pl:'Linux armv8l',r:2.625,t:5,m:true},mini:{ua:'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1',pl:'iPhone',r:3,t:5,m:true}};
+var SPOOF='(function(){var D=__D;function d(o,k,v){try{Object.defineProperty(o,k,{get:function(){return v},configurable:true})}catch(e){}}d(navigator,"userAgent",D.ua);d(navigator,"appVersion",D.ua.slice(8));d(navigator,"platform",D.pl);d(navigator,"maxTouchPoints",D.t);d(navigator,"userAgentData",D.ua.indexOf("iPhone")>=0?undefined:{mobile:D.m,platform:D.pl.indexOf("Win")==0?"Windows":"Android",brands:[]});d(window,"devicePixelRatio",D.r);d(screen,"width",D.w);d(screen,"height",D.h);d(screen,"availWidth",D.w);d(screen,"availHeight",D.h);if(D.t&&!("ontouchstart" in window))window.ontouchstart=null})();';
+function hook(){var e=JSON.parse(JSON.stringify(ENV[S.dev])),d=dims(S.dev);e.w=d[0];e.h=d[1];return 'var __D='+JSON.stringify(e)+';'+SPOOF+HOOK}
+var MAP={doc:1};
+function isDoc(t){return /^\s*(<!doctype|<html)/i.test(t||'')}
+function nl(t){return t.split('\n').length-1}
+function injectHook(t){var h='<script>'+hook()+'<\/script>';if(/<head[^>]*>/i.test(t))return t.replace(/<head[^>]*>/i,function(m){return m+h});if(/<html[^>]*>/i.test(t))return t.replace(/<html[^>]*>/i,function(m){return m+h});return h+t}
+function build(){var c=CD();if(isDoc(c.html)){MAP={doc:1};return injectHook(c.html)}
+  var p1='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>'+c.css+'</style></head><body>',p2=p1+c.html+'<script>'+hook()+'<\/script><script>';
+  MAP={doc:0,html0:nl(p1)+1,js0:nl(p2)+1};return p2+c.js+'<\/script></body></html>'}
+function fullApp(){var c=CD();if(isDoc(c.html))return c.html;var g=S.cfg,n=esc(S.name||'My App'),h='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="'+S.color+'"><meta name="description" content="'+esc(g.desc)+'"><meta name="author" content="'+esc(g.author)+'"><meta name="version" content="'+esc(g.ver)+'"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="'+n+'"><title>'+n+'</title>';if(S.icon)h+='<link rel="icon" href="'+S.icon+'"><link rel="apple-touch-icon" href="'+S.icon+'">';return h+'<style>html,body{background:'+S.bg+'}'+c.css+'</style></head><body>'+c.html+'<script>'+c.js+'<\/script></body></html>'}
+function hasTag(t){return /<(html|body|style|script)/i.test(t)}
+function putFile(name,text){var ext=(name.split('.').pop()||'').toLowerCase();
+  if(ext==='css'){S.code.css=text;return 'CSS'}
+  if(ext==='js'){S.code.js=text;return 'JS'}
+  var asHtml=ext==='html'||ext==='htm'||((ext==='txt'||ext===name)&&S.tab==='html');
+  if(asHtml&&hasTag(text)){var d=new DOMParser().parseFromString(text,'text/html'),css='',js='';
+    d.querySelectorAll('style').forEach(function(s){css+=s.textContent+'\n';s.remove()});
+    d.querySelectorAll('script:not([src]):not([type="text/plain"])').forEach(function(s){js+=s.textContent+'\n';s.remove()});
+    var full=/<(html|body)/i.test(text);S.code.html=d.body.innerHTML.trim();if(full||css.trim())S.code.css=css.trim();if(full||js.trim())S.code.js=js.trim();return 'HTML'+(css.trim()?'+CSS':'')+(js.trim()?'+JS':'')}
+  if(ext==='html'||ext==='htm'){S.code.html=text;return 'HTML'}
+  S.code[S.tab]=text;return S.tab.toUpperCase()}
+
+var ed=$('ed');
+function showTab(){ed.value=S.code[S.tab];document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.t===S.tab)});hreset()}
+function refresh(){['html','css','js'].forEach(function(k){document.querySelector('.tab[data-t='+k+']').classList.toggle('dot',S.code[k].trim().length>0)});$('nm').value=S.name}
+document.querySelectorAll('.tab').forEach(function(b){b.onclick=function(){S.code[S.tab]=ed.value;S.tab=b.dataset.t;showTab()}});
+ed.oninput=function(){S.code[S.tab]=ed.value;refresh();store();clearTimeout(ht);ht=setTimeout(hpush,350)};
+ed.onkeydown=function(e){if(e.key==='Tab'){e.preventDefault();ed.setRangeText('  ',ed.selectionStart,ed.selectionEnd,'end');ed.oninput()}};
+$('nm').oninput=function(){S.name=this.value;store()};
+$('file').onchange=function(){var fs=[].slice.call(this.files);this.value='';if(!fs.length)return;var n=0,got=[];
+  function fin(){if(++n===fs.length){showTab();refresh();store();toast(got.join(' · ')||'Load hoyni')}}
+  fs.forEach(function(f){var r=new FileReader();r.onload=function(){got.push(f.name+' → '+putFile(f.name,String(r.result)));fin()};r.onerror=fin;r.readAsText(f)})};
+function fitImg(f,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var m=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*m);c.height=Math.round(im.height*m);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL(/png|gif|svg/i.test(f.type)?'image/png':'image/jpeg',.85))};im.src=r.result};r.readAsDataURL(f)}
+$('imgFile').onchange=function(){var fs=[].slice.call(this.files);this.value='';if(!fs.length)return;var tags='',n=0;
+  fs.forEach(function(f){fitImg(f,function(d){var key='img/'+f.name.replace(/[^\w.-]+/g,'_');S.assets[key]=d;tags+='<img src="'+key+'" alt="" style="max-width:100%">\n';if(++n===fs.length){S.code[S.tab]=ed.value;S.code.html=(S.code.html?S.code.html+'\n':'')+tags.trim();S.tab='html';showTab();refresh();store();toast('Image HTML-e add hoyeche')}})})};
+$('clr').onclick=function(){var old=ed.value,tab=S.tab;if(!old){toast('Already faka');return}ed.value='';S.code[tab]=''; refresh();store();toast(tab.toUpperCase()+' clear hoyeche','Undo',function(){S.code[tab]=old;if(S.tab===tab)ed.value=old;refresh();store()})};
+function addPasted(t){if(!t||!t.trim()){toast('Kichu paste hoyni');return}S.code[S.tab]=ed.value;var w=putFile('paste',t);showTab();refresh();store();toast('Paste hoyeche → '+w)}
+function execPaste(){var v='';try{var a=document.createElement('textarea');a.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(a);a.focus();if(document.execCommand('paste'))v=a.value;a.remove()}catch(e){}setTimeout(kbCheck,0);return v}
+function readClip(){return new Promise(function(res){try{if(navigator.clipboard&&navigator.clipboard.readText){navigator.clipboard.readText().then(function(t){res(t||'')},function(){res(execPaste())});return}}catch(e){}res(execPaste())})}
+$('pst').onclick=function(){readClip().then(function(t){if(t&&t.trim())addPasted(t);else openPaste()})};
+var pLen=0;
+function openPaste(){$('pbox').value='';pLen=0;$('m-paste').classList.add('on');setTimeout(function(){$('pbox').focus()},50)}
+function pasteNow(b){setTimeout(function(){var t=b.value;if($('m-paste').classList.contains('on')&&t.trim()){closeModals();addPasted(t)}},80)}
+$('pbox').onpaste=function(){pasteNow(this)};
+$('pbox').oninput=function(){var n=this.value.length,j=n-pLen;pLen=n;if(j>2)pasteNow(this)};
+$('padd').onclick=function(){var t=$('pbox').value;closeModals();addPasted(t)};
+$('rfs').onclick=function(){S.code[S.tab]=ed.value;run();toast('Refresh hoyeche, Preview-e dekho')};
+
+function go(p){document.body.classList.remove('only');try{document.activeElement&&document.activeElement.blur()}catch(e){}document.body.classList.remove('kb');document.querySelectorAll('.page').forEach(function(x){x.classList.toggle('on',x.id==='p-'+p)});document.querySelectorAll('nav button').forEach(function(b){b.classList.toggle('on',b.dataset.p===p)});S.code[S.tab]=ed.value;if(p==='prev'){run();layout()}if(p==='dl')renderDl();if(p==='prof')renderProf()}
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){if(b.dataset.p==='new')$('m-new').classList.add('on');else go(b.dataset.p)}});
+function snap(label){var c=S.code;if((c.html+c.css+c.js).trim()){S.hist.unshift({id:Date.now(),code:JSON.parse(JSON.stringify(c)),name:label+(S.name||'App')});S.hist=S.hist.slice(0,15)}}
+document.querySelectorAll('[data-tpl]').forEach(function(b){b.onclick=function(){var t=TPL[b.dataset.tpl];snap('Auto: ');S.code={html:t.html,css:t.css,js:t.js};S.name=t.name;S.icon='';S.assets={};S.tab='html';showTab();refresh();store();$('m-new').classList.remove('on');go('home');toast('Notun app ready')}});
+
+var DEV={desktop:[1366,768,'Desktop · 1366×768'],tablet:[800,1280,'Tablet · 800×1280'],phone:[412,915,'Galaxy A13 · 412×915'],mini:[375,812,'iPhone 13 mini · 375×812']},Z=null;
+var errs=[],errToast=false;
+function where(line){if(MAP.doc)return['html',line];if(line>=MAP.js0)return['js',line-MAP.js0+1];if(line>=MAP.html0)return['html',line-MAP.html0+1];return['css',line]}
+function hintFor(m){if(/properties of (null|undefined)/.test(m))return 'Ei id/naam-er element HTML-e nei, othoba script age chole gese. id thik ache kina dekho.';if(/is not defined/.test(m))return 'Ei naam age define kora hoyni ba bhul likha.';if(/is not a function/.test(m))return 'Ei naam function noy ba bhul likha.';if(/Unexpected|Invalid or unexpected|missing \)/.test(m))return 'Syntax bhul: ( ) { } " \' kothao bondho hoyni.';return ''}
+function renderErr(){var d=$('err');d.innerHTML='';if(!errs.length){d.style.display='none';return}d.style.display='block';
+  errs.slice(0,8).forEach(function(x){var e=document.createElement('div');e.className='e';var h=document.createElement('b');h.textContent='❌ '+(x.tab?x.tab.toUpperCase()+' tab, line '+x.line:'Error');e.appendChild(h);var m=document.createElement('div');m.textContent=x.msg;e.appendChild(m);
+    if(x.src){var c=document.createElement('code');c.textContent='› '+x.src;e.appendChild(c)}
+    if(x.hint){var s=document.createElement('small');s.textContent='💡 '+x.hint;e.appendChild(s)}
+    if(x.tab){var b=document.createElement('button');b.textContent='📍 Oi line-e jao';b.onclick=function(){jumpTo(x.tab,x.line)};e.appendChild(b)}
+    d.appendChild(e)})}
+function addErr(m,line){var t='',n=0;if(line>0){var w=where(line);t=w[0];n=w[1]}var src=t?((S.code[t]||'').split('\n')[n-1]||'').trim().slice(0,90):'',key=m+'|'+t+n;
+  if(errs.some(function(x){return x.key===key}))return;errs.push({key:key,msg:m,tab:t,line:n,src:src,hint:hintFor(m)});renderErr();
+  if(!errToast){errToast=true;toast('❌ Error pawa gese','Dekho',function(){if(document.body.classList.contains('only'))setOnly(false);$('err').scrollIntoView({behavior:'smooth',block:'center'})})}}
+function lint(){if(isDoc(S.code.html))return;var c=S.code.css||'',o=(c.match(/\{/g)||[]).length,k=(c.match(/\}/g)||[]).length;if(o!==k)errs.push({key:'cssb',msg:'CSS-e { ('+o+') ar } ('+k+') shonkha milche na',tab:'css',line:1,src:'',hint:'Kono rule-er { ba } bad pore gese.'})}
+function jumpTo(tab,line){S.code[S.tab]=ed.value;S.tab=tab;showTab();go('home');var ls=S.code[tab].split('\n'),st=0;for(var i=0;i<line-1&&i<ls.length;i++)st+=ls[i].length+1;ed.focus();ed.setSelectionRange(st,st+(ls[line-1]||'').length);ed.scrollTop=Math.max(0,line-3)*19.5}
+function run(){errs=[];errToast=false;lint();renderErr();$('frame').srcdoc=build();S.runs++;store()}
+function dims(k){var d=DEV[k],w=d[0],h=d[1];if(S.rot&&k!=='desktop'){var t=w;w=h;h=t}return[w,h]}
+function extra(k,w,h){var m=Math.min(w,h);return k==='tablet'?[.12*m,.12*m]:k==='desktop'?[.032*m,.154*m]:[.064*m,.064*m]}
+function fitScale(){var st=$('stage'),k=(S.dev==='mini'||S.dev==='phone')?'phone':S.dev,d=dims(k),e=extra(k,d[0],d[1]),sc=(st.clientWidth-16)/(d[0]+e[0]);if(document.body.classList.contains('only'))sc=Math.min(sc,(st.clientHeight-16)/(d[1]+e[1]));if(!(sc>0))sc=1;return Math.min(sc,2)}
+function layout(){var dm=dims(S.dev),w=dm[0],h=dm[1],sc=Z||fitScale(),u=Math.min(w,h)*sc/100,wr=$('wrap'),f=$('frame');
+  $('devbox').style.setProperty('--u',u+'px');
+  $('dev').className='dev '+S.dev+(S.rot&&S.dev!=='desktop'?' rot':'');
+  $('stand').className='stand'+(S.dev==='desktop'?' on':'');
+  wr.style.width=Math.round(w*sc)+'px';wr.style.height=Math.round(h*sc)+'px';
+  f.style.width=w+'px';f.style.height=h+'px';f.style.transform='scale('+sc+')';
+  $('dim').textContent=DEV[S.dev][2]+' · '+Math.round(sc*100)+'%'+(isDoc(S.code.html)?' · pura page':'');
+  document.querySelectorAll('[data-d]').forEach(function(b){b.classList.toggle('on',b.dataset.d===S.dev)});$('rot').classList.toggle('on',S.rot)}
+function zoomBy(m){var cur=Z||fitScale();Z=Math.max(.15,Math.min(3,cur*m));layout();var st=$('stage');st.scrollLeft=(st.scrollWidth-st.clientWidth)/2}
+document.querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){S.dev=b.dataset.d;Z=null;store();layout();run()}});
+function rotate(){S.rot=!S.rot;Z=null;layout()}
+$('rot').onclick=rotate;
+$('fabRot').onclick=rotate;
+$('zin').onclick=function(){zoomBy(1.25)};
+$('zout').onclick=function(){zoomBy(1/1.25)};
+function setOnly(v){document.body.classList.toggle('only',v);Z=null;layout()}
+$('only').onclick=function(){setOnly(true)};
+$('fabExit').onclick=function(){setOnly(false)};
+$('rl').onclick=function(){run();toast('Reload hoyeche')};
+$('build').onclick=function(){go('dl');toast('Build ready! Ekhan theke download koro')};
+addEventListener('resize',function(){if($('p-prev').classList.contains('on'))layout()});
+addEventListener('message',function(e){var d=e.data;if(d&&d.abErr)addErr(String(d.abErr),d.line||0)});
+
+function small(file,size,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas');c.width=c.height=size;var x=c.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,size,size);cb(c.toDataURL('image/png'))};im.src=r.result};r.readAsDataURL(file)}
+function card(){var a=$('appIcon');a.style.background=S.color;a.innerHTML=S.icon?'<img alt="" src="'+S.icon+'">':esc((S.name||'A').charAt(0).toUpperCase());$('cardName').textContent=S.name||'My App';$('cardInfo').textContent='v'+S.cfg.ver+' ('+S.cfg.code+') · '+(fullApp().length/1024).toFixed(1)+' KB'}
+function renderDl(){$('nm2').value=S.name;$('clr2').value=S.color;$('clr3').value=S.bg;document.querySelectorAll('[data-c]').forEach(function(el){el.value=S.cfg[el.dataset.c]});card()}
+$('nm2').oninput=function(){S.name=this.value;store();$('nm').value=S.name;card()};
+$('clr2').oninput=function(){S.color=this.value;store();card()};$('clr3').oninput=function(){S.bg=this.value;store()};
+document.querySelectorAll('[data-c]').forEach(function(el){el.oninput=el.onchange=function(){S.cfg[el.dataset.c]=el.value;store();card()}});
+$('iconFile').onchange=function(){var f=this.files[0];this.value='';if(f)small(f,192,function(d){S.icon=d;store();card()})};
+$('iconRm').onclick=function(){S.icon='';store();card()};
+function copyText(t,m){function ok(){toast(m)}function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')?ok():toast('Copy hoyni')}catch(e){toast('Copy hoyni')}a.remove()}
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb()}
+function saveFile(filename,mime,text){
+  var use=(window.claude&&window.claude.use)?window.claude.use('downloads'):Promise.resolve(null);
+  use.then(function(d){if(!d)throw{code:'unavailable'};return d.save({filename:filename,data:text})})
+  .then(function(){toast('Save hoyeche ✓ ('+filename+')')})
+  .catch(function(e){var code=e&&e.code;if(code==='declined'){toast('Cancel korle');return}
+    var file;try{file=new File([text],filename,{type:mime})}catch(x){}
+    if(file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file]}).then(function(){toast('Share hoyeche')},function(){anchor()});return}
+    anchor();
+    function anchor(){var ok=true;try{var u=URL.createObjectURL(new Blob([text],{type:mime})),a=document.createElement('a');a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},3000)}catch(x){ok=false}
+      toast(ok?'Download shuru hoyeche. Box ashle "SAVE FILE" chapo':'Download hoyni. "Code dekho" chapo','Code dekho',showCode)}})}
+function showCode(){$('cbox').value=fullApp();$('m-code').classList.add('on')}
+$('dl').onclick=function(){S.code[S.tab]=ed.value;saveFile((S.name||'app').replace(/[^\w-]+/g,'_')+'.html','text/html',fullApp())};
+$('viewCode').onclick=showCode;
+$('apk').onclick=function(){S.code[S.tab]=ed.value;var g=S.gh||{};$('ghUser').value=g.user||'';$('ghRepo').value=g.repo||'';$('ghTok').value=g.token||'';$('m-apk').classList.add('on')};
+$('ymlCopy').onclick=function(){copyText($('ymlSrc').textContent.replace(/^\n/,''),'build.yml copy hoyeche. GitHub-e Paste koro')};
+$('csel').onclick=function(){$('cbox').focus();$('cbox').select()};
+$('ccopy').onclick=function(){copyText($('cbox').value,'Code copy hoyeche')};
+
+function renderProf(){var a=$('avatar');a.innerHTML=S.user.img?'<img alt="" src="'+S.user.img+'">':esc((S.user.name||'U').charAt(0).toUpperCase());$('uname').value=S.user.name;$('sRuns').textContent=S.runs;$('sVer').textContent=S.hist.length;$('sLines').textContent=(S.code.html+S.code.css+S.code.js).split('\n').length;renderLogin();renderHist()}
+function renderLogin(){var b=$('loginBox');b.innerHTML='';
+  if(S.user.email){b.innerHTML='<div class="card"><div><b>Logged in</b><small></small></div><button class="pill alt" id="lo">Logout</button></div>';b.querySelector('small').textContent=S.user.email;$('lo').onclick=function(){S.user.email='';store();renderLogin();toast('Logout hoyeche')}}
+  else{b.innerHTML='<input type="text" id="gm" inputmode="email" autocapitalize="off" placeholder="tomar@gmail.com" aria-label="Gmail"><button class="pill big" id="li">Gmail diye Login</button><p class="hint">Ei device-e save hoy. Asol Google verify kore na.</p>';
+    $('li').onclick=function(){var v=$('gm').value.trim();if(!/^[\w.+-]+@gmail\.com$/i.test(v)){toast('Sothik Gmail likho (...@gmail.com)');return}S.user.email=v;if(!S.user.name)S.user.name=v.split('@')[0];store();renderProf();toast('Login hoyeche ✓')}}}
+$('uname').oninput=function(){S.user.name=this.value;store();if(!S.user.img)$('avatar').textContent=(this.value||'U').charAt(0).toUpperCase()};
+$('avFile').onchange=function(){var f=this.files[0];this.value='';if(f)small(f,160,function(d){S.user.img=d;store();renderProf()})};
+$('saveV').onclick=function(){S.code[S.tab]=ed.value;snap('');store();renderProf();toast('Version save hoyeche')};
+function renderHist(){var l=$('hist');l.innerHTML='';if(!S.hist.length){l.innerHTML='<p class="hint">Ekhono kono version save kora nei.</p>';return}
+  S.hist.forEach(function(h,i){var c=document.createElement('div');c.className='card';c.innerHTML='<div><b>'+esc(h.name)+'</b><small>'+new Date(h.id).toLocaleString()+'</small></div><div style="display:flex;gap:6px"><button class="pill" data-o>Open</button><button class="pill alt" data-d aria-label="Delete">✕</button></div>';
+    c.querySelector('[data-o]').onclick=function(){snap('Auto: ');S.code=JSON.parse(JSON.stringify(h.code));showTab();refresh();store();go('home');toast('Version load hoyeche')};
+    c.querySelector('[data-d]').onclick=function(){S.hist.splice(i,1);store();renderHist()};l.appendChild(c)})}
+
+var H=[''],hi=0,ht;
+function hreset(){H=[ed.value];hi=0}
+function hpush(){var v=ed.value;if(H[hi]===v)return;H=H.slice(0,hi+1);H.push(v);if(H.length>80)H.shift();hi=H.length-1}
+function hset(i){hi=i;ed.value=H[hi];S.code[S.tab]=ed.value;refresh();store()}
+document.querySelectorAll('.etb button').forEach(function(b){b.onmousedown=function(e){e.preventDefault()}});
+$('eAll').onclick=function(){ed.focus();ed.setSelectionRange(0,ed.value.length)};
+function clipWrite(t,done){function fb(){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();done(ok)}
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){done(true)},fb);else fb()}
+$('eCopy').onclick=function(){var s=ed.selectionStart,e=ed.selectionEnd;if(s===e){toast('Age lekha select koro');return}clipWrite(ed.value.slice(s,e),function(ok){ed.focus();ed.setSelectionRange(s,e);toast(ok?'Copy hoyeche':'Copy hoyni')})};
+$('eCut').onclick=function(){var s=ed.selectionStart,e=ed.selectionEnd;if(s===e){toast('Age lekha select koro');return}clipWrite(ed.value.slice(s,e),function(ok){if(!ok){toast('Cut hoyni');return}ed.setRangeText('',s,e,'end');ed.focus();ed.oninput();toast('Cut hoyeche')})};
+$('ePaste').onclick=function(){var s=ed.selectionStart,e=ed.selectionEnd;readClip().then(function(t){if(!t){ed.focus();toast('Box-e chepe dhore Paste chapo');return}ed.setRangeText(t,s,e,'end');ed.focus();ed.oninput();toast('Paste hoyeche')})};
+$('eUndo').onclick=function(){clearTimeout(ht);hpush();if(hi>0)hset(hi-1);else toast('Ar undo nei')};
+$('eRedo').onclick=function(){if(hi<H.length-1)hset(hi+1);else toast('Ar redo nei')};
+
+function b64(t){return btoa(unescape(encodeURIComponent(t)))}
+var GHMS=window.__GHMS||5000;
+function ghApi(path,opt){opt=opt||{};var h={'Accept':'application/vnd.github+json','Authorization':'Bearer '+S.gh.token};if(opt.body)h['Content-Type']='application/json';
+  return fetch('https://api.github.com'+path,{method:opt.method||'GET',headers:h,cache:'no-store',body:opt.body?JSON.stringify(opt.body):undefined}).catch(function(){throw new Error('GitHub-er sathe jogajog hoyni. Internet ache kina dekho. Claude-er preview-te ei feature block thake: APK ba Chrome-e chalao.')}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok)throw new Error(j.message||('HTTP '+r.status));return j})})}
+function ghPut(path,text,msg,tries){tries=tries||0;var base='/repos/'+S.gh.user+'/'+S.gh.repo+'/contents/'+path;
+  return ghApi(base).then(function(j){return j.sha},function(){return null}).then(function(sha){var body={message:msg,content:b64(text)};if(sha)body.sha=sha;return ghApi(base,{method:'PUT',body:body})})
+  .catch(function(e){if(tries<2&&/does not match|conflict|HTTP 409/i.test(e.message))return new Promise(function(r){setTimeout(r,GHMS/3)}).then(function(){return ghPut(path,text,msg,tries+1)});throw e})}
+function ghStat(m,err){var d=$('ghStat');d.style.display='block';d.textContent=m;d.style.background=err?'#FBE3DF':'';d.style.color=err?'#C0392B':''}
+function ghRead(){S.gh={user:$('ghUser').value.trim().replace(/^@/,''),repo:$('ghRepo').value.trim().replace(/^https?:\/\/github\.com\/[^\/]+\//i,'').replace(/\.git$/,'').replace(/\/$/,''),token:$('ghTok').value.trim()};store();if(!S.gh.user||!S.gh.repo||!S.gh.token){ghStat('Username, repository ar token tinta-i likho',1);return false}return true}
+function ghCheck(){var u=S.gh.user,r=S.gh.repo,L=[],fail=function(m){L.push('✗ '+m);return{ok:false,lines:L}};
+  return ghApi('/user').then(function(me){L.push('✓ Token thik ('+me.login+')');
+    return ghApi('/repos/'+u+'/'+r).then(function(rp){
+      if(rp.private)return fail('Repo Private. APK download-er jonno Public lagbe (Repo Settings → Danger Zone → Change visibility)');
+      L.push('✓ Repo paoa gese (Public)');
+      if(rp.permissions&&!rp.permissions.push)return fail('Token diye ei repo-te lekha jabe na. Token-e public_repo tick ache kina dekho');
+      L.push('✓ Lekhar permission ache');
+      return ghApi('/repos/'+u+'/'+r+'/contents/.github/workflows/build.yml').then(function(f){L.push('✓ build.yml ache');var t='';try{t=atob((f.content||'').replace(/\n/g,''))}catch(e){}if(t&&(t.indexOf('www/**')<0||t.indexOf('app.json')<0))L.push('⚠ build.yml purono mone hocche. Notun "build.yml copy" diye bodle nao');return{ok:true,lines:L}},function(){return fail('.github/workflows/build.yml nei. "build.yml copy" diye repo-te banao')})
+    },function(e){return fail(/Not Found/i.test(e.message)?'Repo "'+u+'/'+r+'" paoa jayni. Naam bhul, ba Private repo-te token-er access nei':e.message)})
+  },function(e){return fail(/Bad credentials|Unauthorized/i.test(e.message)?'Token thik noy ba expire hoyeche. Notun token banao':e.message)})}
+function waitRun(sha,t0){return new Promise(function(res,rej){var n=0;function tick(){ghApi('/repos/'+S.gh.user+'/'+S.gh.repo+'/actions/runs?head_sha='+sha).then(function(j){var r=j.workflow_runs&&j.workflow_runs[0],sec=Math.round((Date.now()-t0)/1000);
+  if(r&&r.status==='completed'){if(r.conclusion==='success'){res(r);return}ghApi('/repos/'+S.gh.user+'/'+S.gh.repo+'/actions/runs/'+r.id+'/jobs').then(function(q){var st=((q.jobs&&q.jobs[0]&&q.jobs[0].steps)||[]).filter(function(x){return x.conclusion==='failure'})[0];rej(new Error('Build fail hoyeche'+(st?': "'+st.name+'" dhape':'')+'. Error log dekhte: '+r.html_url))},function(){rej(new Error('Build fail hoyeche ('+r.conclusion+'). Error dekhte: '+r.html_url))});return}
+  if(!r&&n>24){rej(new Error('Build shuru hoyni. .github/workflows/build.yml thik jayga-e ache kina, Actions chalu ache kina dekho'));return}
+  ghStat('3/4 APK toiri hochhe ('+Math.floor(sec/60)+'m '+sec%60+'s) · '+(r?'GitHub: '+r.status:'build shuru hochhe')+'\nApp khola rakho.'+(r&&r.html_url?'\n'+r.html_url:''));
+  if(++n>150){rej(new Error('Onek somoy lagche. GitHub > Actions-e dekho'));return}setTimeout(tick,GHMS)},rej)}tick()})}
+$('ghChk').onclick=function(){if(!ghRead())return;$('ghChk').disabled=true;ghStat('Check hochhe...');ghCheck().then(function(c){if(c.ok)c.lines.push('Shob thik! Ekhon 🚀 chapo.');ghStat(c.lines.join('\n'),!c.ok)}).catch(function(e){ghStat(e.message,1)}).then(function(){$('ghChk').disabled=false})};
+$('ghSetup').onclick=function(){if(!ghRead())return;$('ghSetup').disabled=true;ghStat('build.yml toiri hochhe...');
+  ghPut('.github/workflows/build.yml',$('ymlSrc').textContent.replace(/^\n/,''),'Add APK build workflow').then(function(){ghStat('✓ build.yml toiri hoyeche. Ekhon 🔍 Check chepe dekho, tarpor 🚀 chapo.')})
+  .catch(function(e){var m=e.message;if(/workflow/i.test(m)||m==='Not Found')m='Token-e "workflow" permission nei (ba repo paoa jayni). Notun token-e public_repo ar workflow dutoi tick koro. Na hole "build.yml copy" diye nijer haate .github/workflows/build.yml banao.';ghStat('Hoyni: '+m,1)}).then(function(){$('ghSetup').disabled=false})};
+$('ghCopy').onclick=function(){copyText($('ghDl').href,'APK link copy hoyeche. Chrome-e paste koro')};
+$('ghGo').onclick=function(){
+  if(!ghRead())return;
+  var id=(S.cfg.pkg||'').trim();if(!/^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/i.test(id)){ghStat('Package name thik noy. Download Apps-e jemon likho: com.naam.app',1);return}
+  S.code[S.tab]=ed.value;$('ghDl').style.display='none';$('ghCopy').style.display='none';$('ghGo').disabled=true;$('ghChk').disabled=true;
+  var cfg=JSON.stringify({name:((S.name||'').replace(/[^\w .-]/g,'').trim()||'My App'),id:id},null,2);
+  ghStat('0/4 GitHub connection check hochhe...');
+  ghCheck().then(function(c){if(!c.ok){var er=new Error(c.lines.join('\n'));er.stop=1;throw er}ghStat('1/4 Settings pathano hochhe...');return ghPut('app.json',cfg,'App settings')})
+  .then(function(){ghStat('2/4 App code pathano hochhe...');return ghPut('www/index.html',fullApp()+'\n<!-- build '+Date.now()+' -->','Build '+new Date().toISOString())})
+  .then(function(r){ghStat('3/4 APK toiri shuru...');return waitRun(r.commit.sha,Date.now())})
+  .then(function(run){ghStat('4/4 APK link khuja hochhe...');return ghApi('/repos/'+S.gh.user+'/'+S.gh.repo+'/releases/tags/build-'+run.run_number)})
+  .then(function(rel){var a=rel.assets&&rel.assets[0];if(!a)throw new Error('APK file paoa jayni. Release dekho: https://github.com/'+S.gh.user+'/'+S.gh.repo+'/releases');var l=$('ghDl');l.href=a.browser_download_url;l.style.display='flex';$('ghCopy').style.display='block';ghStat('✓ APK ready! Niche Download chapo. Na khulle "Link copy" kore Chrome-e paste koro.')})
+  .catch(function(e){var m=e.message;if(m==='Not Found')m='Paoa jayni. Username, repo naam, token check koro';if(/Bad credentials/i.test(m))m='Token thik noy';ghStat(e.stop?m:'Hoyni: '+m,1)}).then(function(){$('ghGo').disabled=false;$('ghChk').disabled=false})};
+
+var maxH=innerHeight,lastW=innerWidth;
+function kbCheck(){if(innerWidth!==lastW){lastW=innerWidth;maxH=innerHeight}if(innerHeight>maxH)maxH=innerHeight;var a=document.activeElement,t=a&&a.tagName,ty=a&&a.type;var typing=t==='TEXTAREA'||t==='SELECT'||(t==='INPUT'&&ty!=='file'&&ty!=='color');document.body.classList.toggle('kb',typing&&innerHeight<maxH*0.85)}
+document.addEventListener('focusin',function(){setTimeout(kbCheck,350)});
+document.addEventListener('focusout',function(){setTimeout(kbCheck,150)});
+addEventListener('resize',kbCheck);
+
+showTab();refresh();
+})();</script></body></html>
+<!-- build 1791999055640 -->
